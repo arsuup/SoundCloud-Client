@@ -10,7 +10,7 @@ const path = require("path");
 const { Client, StatusDisplayType } = require("@xhayper/discord-rpc");
 const { ActivityType } = require("discord-api-types/v10");
 const client = new Client({
-  clientId: "1054636117284106270", // Discord App Client ID
+  clientId: "1493898690299953232", // Discord App Client ID
 });
 
 const clientVersion = packagefile.version;
@@ -40,6 +40,7 @@ let cursonginfo = {
   songtitle: "",
   songartist: "",
   songcover: "",
+  songalbum: "",
   songurl: "",
   songliked: false,
   songduration: "",
@@ -130,6 +131,8 @@ webview.addEventListener("console-message", (e) => {
     }
   } else if (e.message.split("|")[1] == "CurSongArtist") {
     cursonginfo.songartist = e.message.split("|")[2];
+  } else if (e.message.split("|")[1] == "CurSongAlbum") {
+    cursonginfo.songalbum = e.message.split("|")[2];
   } else if (e.message.split("|")[1] == "CurSongLiked") {
     if (e.message.split("|")[2] == "true") {
       cursonginfo.songliked = true;
@@ -177,11 +180,16 @@ async function updateDiscordActivity() {
   const isPause = cursonginfo.songstate === "paused";
   const title = cursonginfo.songtitle || "Unknown Title";
   const artist = cursonginfo.songartist || "Unknown Artist";
+  const album = cursonginfo.album || "Unknown Album";
 
   const largeImageKey = isPause
     ? "bw-exploring-bordered-white"
     : cursonginfo.songcover;
   const largeImageText = isPause ? "Exploring SoundCloud" : "";
+
+  const state = album === "Unknown Album"
+    ? `${artist}`
+    : `${artist} • ${album}`;
 
   const ts = calcTimestamps(
     cursonginfo.songcurrentdur,
@@ -190,15 +198,11 @@ async function updateDiscordActivity() {
 
   const activity = {
     type: ActivityType.Listening,
-    details: isPause ? "BetterSoundCloud" : `${title}`,
-    state: isPause ? `At ${userviewpage}` : `${artist}`,
+    details: title,
+    state: state,
     largeImageKey,
-    largeImageText,
-    smallImageKey: "bw-icon-bordered-white",
-    smallImageText: `V${clientVersion}`,
-    instance: false,
+    largeImageText: album,
     startTimestamp: startingTimestamp,
-    statusDisplayType: StatusDisplayType.DETAILS,
   };
 
   if (!isPause && ts) {

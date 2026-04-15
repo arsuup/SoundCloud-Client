@@ -5,7 +5,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
 REPO_URL="https://github.com/ULTRA-VAGUE/BetterSoundCloud-On-Linux"
 
-echo "🔄 Checking for updates..."
+echo "Checking for updates..."
 if git rev-parse --is-inside-work-tree &>/dev/null; then
     git remote set-url origin "$REPO_URL" 2>/dev/null || git remote add origin "$REPO_URL"
     git fetch origin main

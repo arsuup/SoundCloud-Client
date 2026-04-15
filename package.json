@@ -8,8 +8,8 @@
     "package": "electron-forge package",
     "make": "electron-forge make"
   },
-  "repository": "https://github.com/AlirezaKJ/BetterSoundCloud",
-  "downloadpage": "https://github.com/AlirezaKJ/BetterSoundCloud/releases",
+  "repository": "https://github.com/arsuup/SoundCloud-Client",
+  "downloadpage": "https://github.com/arsuup/SoundCloud-Client/releases",
   "keywords": [
     "electron",
     "soundcloud",
@@ -20,7 +20,7 @@
     "song",
     "web"
   ],
-  "author": "AlirezaKJ",
+  "author": "Arsuup",
   "license": "MIT license",
   "devDependencies": {
     "@electron-forge/cli": "^7.5.0",
